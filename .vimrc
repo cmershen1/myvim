@@ -165,7 +165,7 @@ func! Link()
                 echohl WarningMsg | echo " linking..."
                 silent make
             elseif expand("%:e") == "cpp" || expand("%:e") == "cxx"
-                setlocal makeprg=g++\ -o\ %<\ %<.o
+                setlocal makeprg=g++\ -o\ %<.out\ %<.o
                 echohl WarningMsg | echo " linking..."
                 silent make
             endif
@@ -209,7 +209,7 @@ func! Run()
     if g:iswindows
         let Exe = expand("%:p:r").s:Exe_Extension
     else
-        let Exe = expand("%:p:r")
+        let Exe = expand("%:p:r").".out"
     endif
     if executable(Exe) && getftime(Exe) >= getftime(Obj) && getftime(Obj) >= getftime(Sou)
         redraw!
@@ -218,9 +218,9 @@ func! Run()
             exe ":!%<.exe"
         else
             if g:isGUI
-                exe ":!gnome-terminal -e ./%<"
+                exe ":!gnome-terminal -e ./%<.out"
             else
-                exe ":!./%<"
+                exe ":!./%<.out"
             endif
         endif
         redraw!
