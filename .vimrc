@@ -225,5 +225,8 @@ func! Run()
         endif
         redraw!
         echohl WarningMsg | echo " running finish"
+        exe ":!rm *.o"
+        exe ":!rm *.out"
+        echo "deleted .o and .out files"
     endif
 endfunc
